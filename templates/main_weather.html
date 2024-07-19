@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Forecast</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .logout-link {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .logout-link:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <h1>Введите название города в котором хотите узнать погоду</h1>
+    <form method="post">
+        <input type="text" name="city" placeholder="Введите название города">
+        <button type="submit">Получить прогноз</button>
+    </form>
+    {% if city_name %}
+        <h2>Текущая температура</h2>
+        <h2>{{current_temperature}}</h2>
+        <h2>Ощущается как</h2>
+        <h2>{{current_apparent_temperature}}</h2>
+        <h2>Прогноз погоды для города {{ city_name }}</h2>
+        <table>
+            <tr>
+                <th>Дата</th>
+                {% for date in dates %}
+                    <th>{{ date }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Максимальная температура</td>
+                {% for temp in temperatures_max %}
+                    <td>{{ temp }}°C</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Минимальная температура</td>
+                {% for temp in temperatures_min %}
+                    <td>{{ temp }}°C</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Вероятность осадков</td>
+                {% for chance in precipitation %}
+                    <td>{{ chance }}%</td>
+                {% endfor %}
+            </tr>
+        </table>
+    {% endif %}
+    <h2>У природы нет плохой погоды!</h2>
+    <a href="{{ url_for('logout') }}" class="logout-link">Выйти</a>
+</body>
+</html>
